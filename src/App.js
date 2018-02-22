@@ -13,7 +13,11 @@ class FigureImg extends Component{
         <img src={imgdata.imageurl} alt={imgdata.title} />
         <figcaption>
           <h2 className="img-title">{imgdata.title}</h2>
+
         </figcaption>
+        <div className="is-back">
+            {imgdata.desc}
+          </div>
       </figure>
     )
   }
@@ -39,7 +43,7 @@ function randomNum(max,min){
 const centerclass = {
   left: '50%',
   top: '50%',
-  transform: 'translate(-50%,-50%)',
+  transform: 'translate(-50%,-50%) rotate(0)',
   zIndex: 999
 }
 var newimagesDatas=[],//存储原始数据的
@@ -58,6 +62,7 @@ class App extends Component {
       imageHeight: 0
     }
     this.handlerResize = this.handlerResize.bind(this);
+    this.get30DegRandom = this.get30DegRandom.bind(this);
   }
   //浏览器窗口大小变化时调用函数
   handlerResize(e){
@@ -66,7 +71,9 @@ class App extends Component {
       stageHeight: this.stage.scrollHeight
     })
   }
-  
+  get30DegRandom(){
+    return ((Math.random() > 0.5?'':'-') + Math.ceil(Math.random()*30));
+  }
   componentWillMount(){
     //将图片的fileName转化成imageurl作为图片的url，添加到各图片对象中
     newimagesDatas = (function getImageData(imglist){
@@ -130,7 +137,8 @@ class App extends Component {
         randomTop = randomNum(this.state.stageHeight-halfimgheight,-halfimgheight);
         imgstyleObj = {
           left: randomLeft,
-          top: randomTop
+          top: randomTop,
+          transform: 'rotate(' + this.get30DegRandom() + 'deg)',
         }
         item.pos = imgstyleObj;
       }else{//设置后半部分图片位置信息
@@ -138,7 +146,8 @@ class App extends Component {
         randomTop = randomNum(this.state.stageHeight-halfimgheight,-halfimgheight);
         imgstyleObj = {
           left: randomLeft,
-          top: randomTop
+          top: randomTop,
+          transform: 'rotate(' + this.get30DegRandom() + 'deg)'
         }
         item.pos = imgstyleObj;
       }
